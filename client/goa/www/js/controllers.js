@@ -27,14 +27,64 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('SplashCtrl', function($scope, $state){
+.controller('SplashCtrl', function($scope, $state, User){
 
 
   $scope.startWindowShop = function(gender) {
-    console.log(gender);
+
+
+    User.gender = gender;
+
+    $state.go('tab.windowshop');
 
   }
 
+
+
+})
+
+.controller('WindowShopCtrl', function($scope, $timeout){
+
+  $scope.articles = [
+     {
+        "title":"EMBROIDERY AND SEQUINS JACKET",
+        "brand":"Zara",
+        "image_large":"http://static.zara.net/photos//2015/I/0/1/p/7521/401/500/2/w/1920/7521401500_1_1_1.jpg?timestamp=1444296079828",
+
+     },
+     {
+        "title":"FUNNEL COLLAR TOP",
+        "artist":"Zara",
+        "image_large":"http://static.zara.net/photos//2015/I/0/1/p/6254/007/605/2/w/1920/6254007605_2_2_1.jpg?timestamp=1444232980621",
+     },
+     {
+        "title":"EMBROIDERED SWEATER",
+        "artist":"Zara",
+        "image_large":"http://static.zara.net/photos//2015/I/0/1/p/2513/102/401/2/w/1920/2513102401_2_1_1.jpg?timestamp=1444227867223",
+     }
+  ];
+
+
+  $scope.currentArticle = $scope.articles[0];
+
+
+  $scope.sendFeedback = function(like) {
+
+    $scope.currentArticle.rated = like;
+    $scope.currentArticle.hide = true;
+
+    var randomSong = Math.round(Math.random() * ($scope.articles.length - 1));
+
+    $timeout(function(){
+
+    
+      $scope.currentArticle = angular.copy($scope.articles[randomSong]);
+      $scope.currentArticle.hide = false;
+      console.log(randomSong);
+
+    }, 50);
+
+  }
 
 
 });

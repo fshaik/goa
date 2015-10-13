@@ -84,9 +84,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/splash.html',
     controller: 'SplashCtrl',
 
+  })
+
+  .state('tab.windowshop', {
+    url: '/windowshop',
+    views: {
+      'tab-windowshop': {
+        templateUrl: 'templates/windowshop.html',
+        controller: 'WindowShopCtrl'
+      }
+    }
+
   });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
 
+}
+
+)
+
+.constant('SERVER', {
+  // Local server
+  //url: 'http://localhost:3000'
+
+  // Public Heroku server
+  url: 'localhost/3000'
 });

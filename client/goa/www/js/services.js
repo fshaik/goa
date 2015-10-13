@@ -47,4 +47,44 @@ angular.module('starter.services', [])
       return null;
     }
   };
+})
+
+.factory('User', function($http, SERVER, $q) {
+
+  var o = {
+    username: false,
+    session_id: false,
+    favorites:[],
+    newFavorites: 0,
+    gender: false
+  }
+
+  return o;
+
+})
+
+.factory('Recomendations', function($http, SERVER, $q) {
+
+  var o = {
+    queue: []
+  };
+
+  o.getNextArticles = function(){
+    return $http({
+      method: 'GET',
+      url: SERVER.url + '/recommendations'
+    }).success(function(data){
+      o.queue = o.queue.concat(data);
+    });
+  };
+
+  o.nextArticle = function() {
+    o.queue.shift();
+    o.haltAudio();
+
+    if(o.queue.length <= 3) {
+      o.getNextSongs();
+    }
+  };
+
 });
