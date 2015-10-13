@@ -63,16 +63,26 @@ angular.module('starter.services', [])
 
 })
 
-.factory('Recomendations', function($http, SERVER, $q) {
+.factory('Recommendations', function($http, SERVER, $q) {
 
   var o = {
     queue: []
   };
 
+  o.init = function () {
+    if(o.queue.length == 0 ) {
+
+      return o.getNextArticles();
+    }
+    else {
+      return o.getNextSongs();
+    }
+  }
+
   o.getNextArticles = function(){
     return $http({
       method: 'GET',
-      url: SERVER.url + '/recommendations'
+      url: SERVER.url + '/article'
     }).success(function(data){
       o.queue = o.queue.concat(data);
     });
@@ -80,11 +90,12 @@ angular.module('starter.services', [])
 
   o.nextArticle = function() {
     o.queue.shift();
-    o.haltAudio();
 
     if(o.queue.length <= 3) {
       o.getNextSongs();
     }
   };
+
+  return o;
 
 });

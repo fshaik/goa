@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('WindowShopCtrl', function($scope, $timeout){
+.controller('WindowShopCtrl', function($scope, $timeout, Recommendations){
 
   $scope.articles = [
      {
@@ -64,8 +64,16 @@ angular.module('starter.controllers', [])
      }
   ];
 
+  Recommendations.init()
+    .then(function(){
+      $scope.currentArticle = Recommendations.queue[0];
+      //Recommendations.playCurrentSong();
+    }).then(function (){
+      //hideLoading();
+      //$scope.currentSong.loaded = true;
+    });
 
-  $scope.currentArticle = $scope.articles[0];
+  //$scope.currentArticle = $scope.articles[0];
 
 
   $scope.sendFeedback = function(like) {
@@ -73,14 +81,15 @@ angular.module('starter.controllers', [])
     $scope.currentArticle.rated = like;
     $scope.currentArticle.hide = true;
 
-    var randomSong = Math.round(Math.random() * ($scope.articles.length - 1));
+    //var randomSong = Math.round(Math.random() * ($scope.articles.length - 1));
+    Recommendations.nextArticle();
 
     $timeout(function(){
 
     
-      $scope.currentArticle = angular.copy($scope.articles[randomSong]);
+      $scope.currentArticle = Recommendations.queue[0];;
       $scope.currentArticle.hide = false;
-      console.log(randomSong);
+      console.log($scope.currentArticle);
 
     }, 50);
 

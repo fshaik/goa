@@ -109,5 +109,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   //url: 'http://localhost:3000'
 
   // Public Heroku server
-  url: 'localhost/3000'
+  url: 'http://localhost:3000'
 });
