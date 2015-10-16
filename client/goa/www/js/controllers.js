@@ -43,26 +43,9 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('WindowShopCtrl', function($scope, $timeout, Recommendations){
+.controller('WindowShopCtrl', function($scope, $timeout, Recommendations, User,$ionicPopup, MATCH_NUM){
 
-  $scope.articles = [
-     {
-        "title":"EMBROIDERY AND SEQUINS JACKET",
-        "brand":"Zara",
-        "image_large":"http://static.zara.net/photos//2015/I/0/1/p/7521/401/500/2/w/1920/7521401500_1_1_1.jpg?timestamp=1444296079828",
 
-     },
-     {
-        "title":"FUNNEL COLLAR TOP",
-        "artist":"Zara",
-        "image_large":"http://static.zara.net/photos//2015/I/0/1/p/6254/007/605/2/w/1920/6254007605_2_2_1.jpg?timestamp=1444232980621",
-     },
-     {
-        "title":"EMBROIDERED SWEATER",
-        "artist":"Zara",
-        "image_large":"http://static.zara.net/photos//2015/I/0/1/p/2513/102/401/2/w/1920/2513102401_2_1_1.jpg?timestamp=1444227867223",
-     }
-  ];
 
   Recommendations.init()
     .then(function(){
@@ -81,7 +64,13 @@ angular.module('starter.controllers', [])
     $scope.currentArticle.rated = like;
     $scope.currentArticle.hide = true;
 
-    //var randomSong = Math.round(Math.random() * ($scope.articles.length - 1));
+    if(like) User.addtoFavorites($scope.currentArticle);
+
+    if(!(User.favorites[$scope.currentArticle.brand] % MATCH_NUM) )
+      $scope.showMatch($scope.currentArticle.brand, User.favorites[$scope.currentArticle.brand]);
+
+
+
     Recommendations.nextArticle();
 
     $timeout(function(){
@@ -95,5 +84,25 @@ angular.module('starter.controllers', [])
 
   }
 
+  $scope.showMatch = function(brand, likes) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'You Like Zara!',
+      template: "You've Liked " + likes + " Items by " + brand
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+       console.log('You are sure');
+      } else {
+       console.log('You are not sure');
+      }  
+    });
+
+ };
+
+
+})
+
+.controller('MallMap', function($scope){
 
 });

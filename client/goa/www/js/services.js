@@ -59,6 +59,25 @@ angular.module('starter.services', [])
     gender: false
   }
 
+  o.addtoFavorites = function(article) {
+
+    var brand = article.brand;
+    var likes = 0;
+
+    console.log(brand);
+
+    if(o.favorites[brand])
+      likes = o.favorites[brand]
+
+
+    o.favorites[brand] = likes + 1;
+
+    console.log(o.favorites);
+
+  }
+
+
+
   return o;
 
 })
@@ -95,6 +114,8 @@ angular.module('starter.services', [])
       o.getNextSongs();
     }
   };
+
+
 
   return o;
 

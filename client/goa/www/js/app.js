@@ -95,6 +95,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
 
+  })
+
+  .state('tab.mallmap', {
+    url:'/mallmap',
+    views: {
+      'tab-mallmap': {
+        templatesUrl: 'templates/tab-mallmap.html',
+        controller: 'MallMap'
+      }
+    }
   });
 
   // if none of the above states are matched, use this as the fallback
@@ -110,4 +120,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Public Heroku server
   url: 'http://localhost:3000'
-});
+})
+
+.constant('MATCH_NUM', 3);
