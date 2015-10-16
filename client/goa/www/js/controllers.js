@@ -1,6 +1,28 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
+
+
+})
+
+.controller('MallMapCtrl', function($scope){
+
+  google.maps.event.addDomListener(window, "load", function() {
+    var myLatlng = new google.maps.LatLng(37.000, -120.000);
+
+    var mapOptions = {
+      center: myLatlng,
+      zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    $scope.map = map;
+
+  });
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -21,12 +43,6 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-})
-
 .controller('SplashCtrl', function($scope, $state, User){
 
 
@@ -43,7 +59,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('WindowShopCtrl', function($scope, $timeout, Recommendations, User,$ionicPopup, MATCH_NUM){
+.controller('WindowShopCtrl', function($scope, $timeout, Recommendations, User,$ionicPopup, MATCH_NUM, $state ){
 
 
 
@@ -64,11 +80,14 @@ angular.module('starter.controllers', [])
     $scope.currentArticle.rated = like;
     $scope.currentArticle.hide = true;
 
-    if(like) User.addtoFavorites($scope.currentArticle);
+    if(like) {
 
-    if(!(User.favorites[$scope.currentArticle.brand] % MATCH_NUM) )
-      $scope.showMatch($scope.currentArticle.brand, User.favorites[$scope.currentArticle.brand]);
+      User.addtoFavorites($scope.currentArticle);
 
+      if(!(User.favorites[$scope.currentArticle.brand] % MATCH_NUM) )
+        $scope.showMatch($scope.currentArticle.brand, User.favorites[$scope.currentArticle.brand]);
+
+    }
 
 
     Recommendations.nextArticle();
@@ -87,12 +106,13 @@ angular.module('starter.controllers', [])
   $scope.showMatch = function(brand, likes) {
     var confirmPopup = $ionicPopup.confirm({
       title: 'You Like Zara!',
-      template: "You've Liked " + likes + " Items by " + brand
+      template: "You've Liked " + likes + " Items by " + brand + "<p><p>Shop There Now?"
     });
+
 
     confirmPopup.then(function(res) {
       if(res) {
-       console.log('You are sure');
+       $state.go('tab.mallmap');
       } else {
        console.log('You are not sure');
       }  
@@ -100,9 +120,5 @@ angular.module('starter.controllers', [])
 
  };
 
-
-})
-
-.controller('MallMap', function($scope){
 
 });

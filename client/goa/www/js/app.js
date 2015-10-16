@@ -98,11 +98,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('tab.mallmap', {
-    url:'/mallmap',
+   url: '/mallmap',
     views: {
       'tab-mallmap': {
-        templatesUrl: 'templates/tab-mallmap.html',
-        controller: 'MallMap'
+        templateUrl: 'templates/tab-mallmap.html',
+        controller: 'MallMapCtrl'
       }
     }
   });

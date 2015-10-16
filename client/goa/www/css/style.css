@@ -91,3 +91,16 @@
   width:1px;
   opacity:0.01;
 }
+
+map {
+
+}
+
+.scroll {
+  height: 100%
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
