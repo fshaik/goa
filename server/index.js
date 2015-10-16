@@ -8,6 +8,7 @@ var _ = require('lodash');
 var app = express();
 
 // Add Middleware necessary for REST API's
+app.use(express.static(path.join(__dirname, 'www')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride('X-HTTP-Method-Override'));
@@ -34,5 +35,5 @@ mongoose.connection.once('open', function() {
    });
 
   console.log('Listening on port 3000...');
-  app.listen(3000);
+  app.listen(process.env.PORT || 5000);
 });
